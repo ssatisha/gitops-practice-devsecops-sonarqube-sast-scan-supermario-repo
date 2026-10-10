@@ -4,8 +4,9 @@ on:
   push:
     branches:
       - main
+
 env:
-  Version: $(( $(catversion.txt) +1))
+  Version: $(( $(cat version.txt) +1))
 
 jobs:
 
