@@ -87,8 +87,11 @@ jobs:
       - name: Update Deployment YAML
         run: |
           git pull
-          sed -i "s|image: ssatisha/supermariogitopsproject:.*$|image: ssatisha/supermariogitopsproject:${{ env.VERSION }}|" deployment.yaml
-          echo ${{ env.VERSION }} > version.txt
+          sed -i "s|image: docker.io/ssatisha/supermariogitopsproject:.*$|image: docker.io/ssatisha/supermariogitopsproject:$(( $(cat version.txt) + 1 ))|" deployment.yaml
+          echo $(( $(cat version.txt) + 1 )) > version.txt
           CURRENT_VERSION=$(cat version.txt)
           git add deployment.yaml version.txt
           git commit -m "Updated deployment yaml and version txt file with supermario image tag to ${CURRENT_VERSION}"
+          
+          # This pushes the changes back to your repository:
+          git push
